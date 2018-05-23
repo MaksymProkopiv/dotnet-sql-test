@@ -19,5 +19,8 @@ spec:
       containers:
         - name: dotnet-sql-test
           image: "__CONTAINERREGISTRY__/dotnet-sql-test:__BUILD_BUILDNUMBER__"
+          env:
+          - name: TestConnection1
+            value: "__SQL_Connection_string__" 
       imagePullSecrets:
         - name: regsecret
