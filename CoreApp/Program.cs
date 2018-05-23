@@ -23,6 +23,13 @@ namespace CoreApp
             EnvironmentVariablesConfigurationProvider envConfig = configuration.Providers.LastOrDefault() as EnvironmentVariablesConfigurationProvider;
 
             string connStr = string.Empty;
+
+            if (envConfig.TryGet("TestConnection", out connStr))
+            {
+                TestConnection(connStr);
+                return;
+            }
+
             int i = 1;
 
             while (jsonConfig.TryGet("TestConnection" + i, out connStr))
@@ -31,20 +38,7 @@ namespace CoreApp
 
                 Console.WriteLine("--------------------");
                 Console.WriteLine("Will test " + connStr);
-
-                using (SqlConnection connection = new SqlConnection(connStr))
-                {
-                    try
-                    {
-                        connection.Open();
-                        Console.WriteLine("Success");
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                        Console.WriteLine(ex.StackTrace);
-                    }
-                }
+                TestConnection(connStr);
             }
 
             Console.WriteLine("--------------------");
@@ -59,23 +53,28 @@ namespace CoreApp
                 Console.WriteLine("--------------------");
                 Console.WriteLine("Will test " + connStr);
 
-                using (SqlConnection connection = new SqlConnection(connStr))
-                {
-                    try
-                    {
-                        connection.Open();
-                        Console.WriteLine("Success");
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                        Console.WriteLine(ex.StackTrace);
-                    }
-                }
+                TestConnection(connStr);
             }
 
             Console.WriteLine("We're done. Press any key to quit.");
             Console.ReadKey();
+        }
+
+        private static void TestConnection(string connStr)
+        {
+            using (SqlConnection connection = new SqlConnection(connStr))
+            {
+                try
+                {
+                    connection.Open();
+                    Console.WriteLine("Success");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.StackTrace);
+                }
+            }
         }
     }
 }
