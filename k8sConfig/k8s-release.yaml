@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: dotnet-sql-test-statefulsets
+spec:
+  selector:
+    matchLabels:
+        app: dotnet-sql-test
+        tier: job
+  serviceName: "dotnet-sql-test"
+  replicas: 1
+  revisionHistoryLimit: 2
+  template:
+    metadata:
+      labels:
+        app: dotnet-sql-test
+        tier: job
+    spec:
+      containers:
+        - name: dotnet-sql-test
+          image: "__CONTAINERREGISTRY__/dotnet-sql-test:__BUILD_BUILDNUMBER__"
+      imagePullSecrets:
+        - name: regsecret
