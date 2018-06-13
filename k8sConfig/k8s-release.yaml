@@ -24,3 +24,4 @@ spec:
             value: "__SQL_Connection_string__" 
       imagePullSecrets:
         - name: regsecret
+      restartPolicy: Never
