@@ -39,13 +39,13 @@ namespace CoreApp
                 {
                     i++;
 
-                    Console.WriteLine("--------------------");
-                    Console.WriteLine("Will test " + connStr);
+                    LogToConsole("--------------------");
+                    LogToConsole("Will test " + connStr);
                     TestConnection(connStr);
                 }
 
-                Console.WriteLine("--------------------");
-                Console.WriteLine("And now ENV variables");
+                LogToConsole("--------------------");
+                LogToConsole("And now ENV variables");
 
                 i = 1;
 
@@ -53,8 +53,8 @@ namespace CoreApp
                 {
                     i++;
 
-                    Console.WriteLine("--------------------");
-                    Console.WriteLine("Will test " + connStr);
+                    LogToConsole("--------------------");
+                    LogToConsole("Will test " + connStr);
 
                     TestConnection(connStr);
                 }
@@ -64,8 +64,8 @@ namespace CoreApp
             }
 
 
-            Console.WriteLine("We're done. Press any key to quit.");
-            Console.ReadKey();
+            //Console.WriteLine("We're done. Press any key to quit.");
+            //Console.ReadKey();
         }
 
         private static void TestConnection(string connStr)
@@ -75,14 +75,19 @@ namespace CoreApp
                 try
                 {
                     connection.Open();
-                    Console.WriteLine("Success");
+                    LogToConsole("Success");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.StackTrace);
+                    LogToConsole(ex.Message);
+                    LogToConsole(ex.StackTrace);
                 }
             }
+        }
+
+        private static void LogToConsole(string message)
+        {
+            Console.WriteLine($"{DateTime.Now} - {message}");
         }
     }
 }
